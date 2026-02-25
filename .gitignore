@@ -69,6 +69,7 @@ out/
 # NETBEANS
 # ==================================================
 nbproject/private/
+nbproject/
 nbbuild/
 nbdist/
 .nb-gradle/
