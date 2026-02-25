@@ -22,3 +22,64 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# ==================================================
+# JAVA - Archivos compilados y empaquetados
+# ==================================================
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+
+# Carpeta de compilación
+bin/
+build/
+out/
+target/
+dist/
+
+# Logs de errores JVM
+hs_err_pid*
+replay_pid*
+
+# ==================================================
+# INTELLIJ IDEA
+# ==================================================
+.idea/
+*.iml
+out/
+
+# ==================================================
+# ECLIPSE
+# ==================================================
+.project
+.classpath
+.settings/
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+
+# ==================================================
+# NETBEANS
+# ==================================================
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# ==================================================
+# VS CODE
+# ==================================================
+.vscode/
+
+# ==================================================
+# SISTEMA OPERATIVO
+# ==================================================
+.DS_Store
+Thumbs.db
