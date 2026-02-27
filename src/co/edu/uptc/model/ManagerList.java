@@ -29,10 +29,10 @@ public class ManagerList implements ModelInterface {
             header = nuevo;
         } else {
             Node aux = header;
-            while (aux.getNode() != null) {
-                aux = aux.getNode();
+            while (aux.getNext() != null) {
+                aux = aux.getNext();
             }
-            aux.setNode(nuevo);
+            aux.setNext(nuevo);
         }
     }
 
@@ -48,7 +48,7 @@ public class ManagerList implements ModelInterface {
 
         while (aux != null) {
             sb.append(aux.getProduct()).append("\n------------------------\n");
-            aux = aux.getNode();
+            aux = aux.getNext();
         }
 
         return sb.toString();
@@ -67,7 +67,7 @@ public class ManagerList implements ModelInterface {
 
         while (aux != null) {
             copyList.add(aux.getProduct());
-            aux = aux.getNode();
+            aux = aux.getNext();
         }
 
         copyList.sort((p1, p2)
@@ -99,23 +99,23 @@ public class ManagerList implements ModelInterface {
                         .toLowerCase()
                         .contains(name.toLowerCase())) {
 
-            header = header.getNode();
+            header = header.getNext();
             found = true;
         }
 
         Node<Product> current = header;
 
-        while (current != null && current.getNode() != null) {
+        while (current != null && current.getNext() != null) {
 
-            if (current.getNode().getProduct()
+            if (current.getNext().getProduct()
                     .getDescription()
                     .toLowerCase()
                     .contains(name.toLowerCase())) {
 
-                current.setNode(current.getNode().getNode());
+                current.setNext(current.getNext().getNext());
                 found = true;
             } else {
-                current = current.getNode();
+                current = current.getNext();
             }
         }
 

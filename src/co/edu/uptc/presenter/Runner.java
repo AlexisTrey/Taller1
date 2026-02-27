@@ -1,6 +1,9 @@
 package co.edu.uptc.presenter;
 
-import co.edu.uptc.model.ManagerList;
+import co.edu.uptc.interfaces.ModelInterface;
+import co.edu.uptc.interfaces.PresenterInterface;
+import co.edu.uptc.interfaces.ViewInterface;
+import co.edu.uptc.model.ManagerLinkedList;
 import co.edu.uptc.view.ConsoleView;
 
 /**
@@ -12,10 +15,10 @@ public class Runner {
 
     public void run() {
 
-        ManagerList model = new ManagerList();
-        //ManagerLinkedList model = new ManagerLinkedList();
-        ConsoleView view = new ConsoleView();
-        MainPresenter presenter = new MainPresenter();
+        //ModelInterface model = new ManagerList();
+        ModelInterface model = new ManagerLinkedList();
+        ViewInterface view = new ConsoleView();
+        PresenterInterface presenter = new MainPresenter();
 
         presenter.setModel(model);
         presenter.setView(view);

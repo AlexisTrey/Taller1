@@ -12,18 +12,18 @@ package co.edu.uptc.model;
 public class Node<T> {
 
     private T product;
-    private Node<T> node;
+    private Node<T> next;
 
     public Node(T product) {
         this.product = product;
     }
 
-    public Node<T> getNode() {
-        return node;
+    public Node<T> getNext() {
+        return next;
     }
 
-    public void setNode(Node<T> node) {
-        this.node = node;
+    public void setNext(Node<T> next) {
+        this.next = next;
     }
 
     public T getProduct() {
