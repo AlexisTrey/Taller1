@@ -73,6 +73,8 @@ nbproject/
 nbbuild/
 nbdist/
 .nb-gradle/
+build.xml
+manifest.mf
 
 # ==================================================
 # VS CODE
