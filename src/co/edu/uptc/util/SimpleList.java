@@ -51,17 +51,7 @@ public class SimpleList<T> implements List<T> {
 
     @Override
     public void sort(Comparator<? super T> c) {
-        for (int i = 0; i < size - 1; i++) {
-            for (int j = i + 1; j < size; j++) {
-                T e1 = (T) elements[i];
-                T e2 = (T) elements[j];
-
-                if (c.compare(e1, e2) > 0) {
-                    elements[i] = e2;
-                    elements[j] = e1;
-                }
-            }
-        }
+        Arrays.sort((T[]) elements, 0, size, c);
     }
 
     @Override
@@ -142,7 +132,13 @@ public class SimpleList<T> implements List<T> {
 
     @Override
     public T set(int index, T element) {
-        return null;
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Índice fuera de rango");
+        }
+
+        T oldValue = (T) elements[index];
+        elements[index] = element;
+        return oldValue;
     }
 
     @Override

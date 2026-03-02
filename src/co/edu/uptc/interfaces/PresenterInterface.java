@@ -1,6 +1,6 @@
 package co.edu.uptc.interfaces;
 
-import co.edu.uptc.model.Product;
+import co.edu.uptc.pojo.Product;
 
 /**
  *

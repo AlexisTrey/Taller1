@@ -6,7 +6,7 @@ package co.edu.uptc.view;
 
 import co.edu.uptc.interfaces.PresenterInterface;
 import co.edu.uptc.interfaces.ViewInterface;
-import co.edu.uptc.model.Product;
+import co.edu.uptc.pojo.Product;
 import co.edu.uptc.util.Utilities;
 
 import java.util.Scanner;
@@ -81,13 +81,33 @@ public class ConsoleView implements ViewInterface {
     private void readInfo() {
 
         System.out.print("Nombre: ");
-        String nombre = scanner.nextLine();
+        String nombre = scanner.nextLine().trim();
 
-        System.out.print("Precio: ");
-        double precio = Double.parseDouble(scanner.nextLine());
+        if (nombre.isEmpty()) {
+            System.out.println("Nombre no puede estar vacío");
+            return;
+        }
+
+        double precio;
+        try {
+            System.out.print("Precio: ");
+            precio = Double.parseDouble(scanner.nextLine());
+            if (precio < 0) {
+                System.out.println("Precio no puede ser negativo");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Precio inválido");
+            return;
+        }
 
         System.out.print("Unidad de medida: ");
-        String unidad = scanner.nextLine();
+        String unidad = scanner.nextLine().trim();
+
+        if (unidad.isEmpty()) {
+            System.out.println("Unidad no puede estar vacía");
+            return;
+        }
 
         Product p = new Product(nombre, precio, unidad);
         presenter.addEnd(p);

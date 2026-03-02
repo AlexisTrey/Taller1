@@ -5,6 +5,8 @@
 package co.edu.uptc.model;
 
 import co.edu.uptc.interfaces.ModelInterface;
+import co.edu.uptc.model.util.Node;
+import co.edu.uptc.pojo.Product;
 import co.edu.uptc.util.SimpleList;
 
 /**

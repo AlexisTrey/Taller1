@@ -1,10 +1,11 @@
 package co.edu.uptc.model;
 
 import co.edu.uptc.interfaces.ModelInterface;
+import co.edu.uptc.pojo.Product;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -22,39 +23,28 @@ public class ManagerLinkedList implements ModelInterface {
 
     @Override
     public String showProducts() {
-        if (products.isEmpty()) {
-            return "Lista vacía.";
-        }
+        if (products.isEmpty()) return "Lista vacía.";
+        return buildString(products);
+    }
 
-        String result = "";
-        for (Product p : products) {
-            result += p + "\n";
-        }
-        return result;
+    private String buildString(List<Product> list) {
+        StringBuilder sb = new StringBuilder();
+        for (Product p : list) sb.append(p).append("\n");
+        return sb.toString();
     }
 
     @Override
     public String sortByName() {
-        if (products.isEmpty()) {
-            return "Lista vacía.";
-        }
+        if (products.isEmpty()) return "Lista vacía.";
+        LinkedList<Product> copy = new LinkedList<>(products);
+        sortList(copy);
+        return buildString(copy);
+    }
 
-        LinkedList<Product> copyList = new LinkedList<>(products);
-
-        Collections.sort(copyList, new Comparator<Product>() {
-            @Override
-            public int compare(Product p1, Product p2) {
-                return p1.getDescription()
-                        .compareToIgnoreCase(p2.getDescription());
-            }
-        });
-
-        String result = "";
-        for (Product p : copyList) {
-            result += p + "\n";
-        }
-
-        return result;
+    private void sortList(List<Product> list) {
+        Collections.sort(list,
+                (p1, p2) -> p1.getDescription()
+                        .compareToIgnoreCase(p2.getDescription()));
     }
 
     @Override
