@@ -16,7 +16,6 @@ public class Runner {
     public void run() {
 
         ModelInterface model = new ManagerList();
-        //ModelInterface model = new ManagerLinkedList();
         ViewInterface view = new ConsoleView();
         PresenterInterface presenter = new MainPresenter();
 
