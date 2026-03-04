@@ -31,10 +31,11 @@ public class UnitsMenu {
     }
 
     private void showMenu() {
-        System.out.println(Utilities.AZUL + "--- Unidad de Medida ---");
+        System.out.println(Utilities.AZUL + "\n" + "--- Unidad de Medida ---");
         for (int i = 0; i < UNITS.length; i++) {
             System.out.println((i + 1) + ". " + UNITS[i]);
         }
+        System.out.println("------------------------");
         System.out.print("Seleccione número: " + Utilities.RESET);
     }
 

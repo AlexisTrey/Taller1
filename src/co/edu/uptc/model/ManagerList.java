@@ -115,9 +115,11 @@ public class ManagerList implements ModelInterface {
 
     private String buildString(Node<Product> start) {
         StringBuilder sb = new StringBuilder();
+        sb.append(Product.header()).append("\n");
+
         Node<Product> aux = start;
         while (aux != null) {
-            sb.append(aux.getProduct()).append("\n------------------------\n");
+            sb.append(aux.getProduct()).append("\n");
             aux = aux.getNext();
         }
         return sb.toString();
@@ -125,8 +127,10 @@ public class ManagerList implements ModelInterface {
 
     private String buildStringFromList(SimpleList<Product> list) {
         StringBuilder sb = new StringBuilder();
+        sb.append(Product.header()).append("\n");
+
         for (int i = 0; i < list.size(); i++) {
-            sb.append(list.get(i)).append("\n------------------------\n");
+            sb.append(list.get(i)).append("\n");
         }
         return sb.toString();
     }

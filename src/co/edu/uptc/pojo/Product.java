@@ -47,7 +47,22 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Producto: " + "\nDescripcion: " + description + "\nPrecio: " + price + "\nUnidad de Medida: " + unitMeasure + "\n";
+        return String.format(
+                "| %-20s | $%10.2f | %-15s |",
+                description,
+                price,
+                unitMeasure
+        );
+    }
+
+    public static String header() {
+        return String.format(
+                "| %-20s | %-11s | %-15s |\n"
+                + "--------------------------------------------------------",
+                "Descripcion",
+                "Precio",
+                "Unidad"
+        );
     }
 
 }
