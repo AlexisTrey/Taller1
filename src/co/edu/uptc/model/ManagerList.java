@@ -25,106 +25,109 @@ public class ManagerList implements ModelInterface {
     @Override
     public void addEnd(Product product) {
 
-        Node nuevo = createNode(product);
+        Node addition = createNode(product);
 
         if (header == null) {
-            header = nuevo;
+            header = addition;
         } else {
             Node aux = header;
             while (aux.getNext() != null) {
                 aux = aux.getNext();
             }
-            aux.setNext(nuevo);
+            aux.setNext(addition);
         }
     }
 
     @Override
     public String showProducts() {
-
         if (header == null) {
-            return "Lista vacía.";
+            return "Lista vacia.";
         }
-
-        StringBuilder sb = new StringBuilder();
-        Node<Product> aux = header;
-
-        while (aux != null) {
-            sb.append(aux.getProduct()).append("\n------------------------\n");
-            aux = aux.getNext();
-        }
-
-        return sb.toString();
+        return buildString(header);
     }
 
     @Override
     public String sortByName() {
-
         if (header == null) {
-            return "Lista vacía.";
+            return "Lista vacia.";
         }
-
-        SimpleList<Product> copyList = new SimpleList<>();
-
-        Node<Product> aux = header;
-
-        while (aux != null) {
-            copyList.add(aux.getProduct());
-            aux = aux.getNext();
-        }
-
-        copyList.sort((p1, p2)
-                -> p1.getDescription()
-                        .compareToIgnoreCase(p2.getDescription())
+        SimpleList<Product> copy = copyToList();
+        copy.sort((p1, p2)
+                -> p1.getDescription().compareToIgnoreCase(p2.getDescription())
         );
-
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < copyList.size(); i++) {
-            sb.append(copyList.get(i))
-                    .append("\n------------------------\n");
-        }
-
-        return sb.toString();
+        return buildStringFromList(copy);
     }
 
     @Override
     public String deleteByName(String name) {
-
         if (header == null) {
-            return "Lista vacía.";
+            return "Lista vacia.";
         }
+        SimpleList<Product> deleted = collectDeleted(name);
+        removeMatching(name);
+        if (deleted.isEmpty()) {
+            return "No se encontro un producto con ese nombre.";
+        }
+        return "Productos eliminados:\n" + buildStringFromList(deleted);
+    }
 
-        boolean found = false;
+    private SimpleList<Product> copyToList() {
+        SimpleList<Product> list = new SimpleList<>();
+        Node<Product> aux = header;
+        while (aux != null) {
+            list.add(aux.getProduct());
+            aux = aux.getNext();
+        }
+        return list;
+    }
 
-        while (header != null
-                && header.getProduct().getDescription()
-                        .toLowerCase()
-                        .contains(name.toLowerCase())) {
+    private SimpleList<Product> collectDeleted(String name) {
+        SimpleList<Product> deleted = new SimpleList<>();
+        Node<Product> aux = header;
+        while (aux != null) {
+            if (matches(aux.getProduct(), name)) {
+                deleted.add(aux.getProduct());
+            }
+            aux = aux.getNext();
+        }
+        return deleted;
+    }
 
+    private void removeMatching(String name) {
+        while (header != null && matches(header.getProduct(), name)) {
             header = header.getNext();
-            found = true;
         }
-
         Node<Product> current = header;
-
         while (current != null && current.getNext() != null) {
-
-            if (current.getNext().getProduct()
-                    .getDescription()
-                    .toLowerCase()
-                    .contains(name.toLowerCase())) {
-
+            if (matches(current.getNext().getProduct(), name)) {
                 current.setNext(current.getNext().getNext());
-                found = true;
             } else {
                 current = current.getNext();
             }
         }
+    }
 
-        if (!found) {
-            return "No se encontró un producto con ese nombre.";
+    private boolean matches(Product product, String name) {
+        return product.getDescription()
+                .toLowerCase()
+                .contains(name.toLowerCase());
+    }
+
+    private String buildString(Node<Product> start) {
+        StringBuilder sb = new StringBuilder();
+        Node<Product> aux = start;
+        while (aux != null) {
+            sb.append(aux.getProduct()).append("\n------------------------\n");
+            aux = aux.getNext();
         }
+        return sb.toString();
+    }
 
-        return "Producto eliminado correctamente.";
+    private String buildStringFromList(SimpleList<Product> list) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i)).append("\n------------------------\n");
+        }
+        return sb.toString();
     }
 }

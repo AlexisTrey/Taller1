@@ -22,6 +22,16 @@ public class ConsoleView implements ViewInterface {
     private Scanner scanner = new Scanner(System.in);
     private boolean isRunning = true;
 
+    private final MainMenu mainMenu;
+    private final ProductReader productReader;
+    private final ActionDelete actionDelete;
+
+    public ConsoleView() {
+        this.mainMenu = new MainMenu(scanner);
+        this.productReader = new ProductReader(scanner);
+        this.actionDelete = new ActionDelete(scanner);
+    }
+
     @Override
     public void setPresenter(PresenterInterface presenter) {
         this.presenter = presenter;
@@ -34,82 +44,40 @@ public class ConsoleView implements ViewInterface {
 
     @Override
     public void start() {
-
         while (isRunning) {
-
-            System.out.println(Utilities.AZUL);
-            System.out.println("==========================================");
-            System.out.println("||      ADMINISTRADOR DE PRODUCTOS      ||");
-            System.out.println("==========================================");
-            System.out.println("|| 1. Agregar producto                  ||");
-            System.out.println("|| 2. Listar productos                  ||");
-            System.out.println("|| 3. Listar ordenados por nombre       ||");
-            System.out.println("|| 4. Borrar producto                   ||");
-            System.out.println("|| 0. Salir                             ||");
-            System.out.println("==========================================");
-            System.out.print(" Seleccione una opción: ");
-            System.out.print(Utilities.RESET);
-
-            String option = scanner.nextLine();
-
-            switch (option) {
-
-                case "1":
-                    readInfo();
-                    break;
-                case "2":
-                    presenter.showProducts();
-                    break;
-                case "3":
-                    presenter.sortByName();
-                    break;
-                case "4":
-                    System.out.print(Utilities.AZUL + "Ingrese nombre del producto: " + Utilities.RESET);
-                    String name = scanner.nextLine();
-                    presenter.deleteByName(name);
-                    break;
-                case "0":
-                    isRunning = false;
-                    System.out.println(Utilities.AZUL + "\nSaliendo..." + Utilities.RESET);
-                    break;
-                default:
-                    System.out.println(Utilities.ROJO + "\nOpción inválida." + Utilities.RESET);
-            }
+            String option = mainMenu.showOption();
+            processOption(option);
         }
     }
 
-    private void readInfo() {
-
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine().trim();
-
-        if (nombre.isEmpty()) {
-            System.out.println("Nombre no puede estar vacío");
-            return;
+    private void processOption(String option) {
+        switch (option) {
+            case "1":
+                addProduct();
+                break;
+            case "2":
+                presenter.showProducts();
+                break;
+            case "3":
+                presenter.sortByName();
+                break;
+            case "4":
+                actionDelete.delete(presenter);
+                break;
+            case "0":
+                isRunning = false;
+                System.out.println(Utilities.AZUL + "\nSaliendo..." + Utilities.RESET);
+                break;
+            default:
+                System.out.println(Utilities.ROJO + "\nOpcion invalida." + Utilities.RESET);
         }
-
-        double precio;
-        try {
-            System.out.print("Precio: ");
-            precio = Double.parseDouble(scanner.nextLine());
-            if (precio < 0) {
-                System.out.println("Precio no puede ser negativo");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Precio inválido");
-            return;
-        }
-
-        System.out.print("Unidad de medida: ");
-        String unidad = scanner.nextLine().trim();
-
-        if (unidad.isEmpty()) {
-            System.out.println("Unidad no puede estar vacía");
-            return;
-        }
-
-        Product p = new Product(nombre, precio, unidad);
-        presenter.addEnd(p);
     }
+
+    private void addProduct() {
+        Product p = productReader.readProduct();
+        if (p != null) {
+            presenter.addEnd(p);
+        }
+    }
+
 }
