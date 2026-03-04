@@ -28,7 +28,7 @@ public class MainMenu {
         System.out.println("|| 4. Borrar producto                   ||");
         System.out.println("|| 0. Salir                             ||");
         System.out.println("==========================================");
-        System.out.print(" Seleccione una opcion: ");
+        System.out.print("Seleccione una opcion: ");
         System.out.print(Utilities.RESET);
         return scanner.nextLine();
     }
